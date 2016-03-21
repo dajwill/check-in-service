@@ -3,5 +3,5 @@ class CheckInRepresenter < Napa::Representer
   property :user_id, type: Integer
   property :business_id, type: Integer
   property :business_code, type: String
-  property :message, type: String
+  # property :message, type: String
 end
