@@ -12,6 +12,7 @@ class BusinessesApi < Grape::API
     desc 'Create a business'
     params do
       requires :name, type: String, desc: 'Name of business'
+      requires :password, type: String, desc: 'Password for business'
       optional :business_type, type: String, desc: "Type of business"
     end
 
@@ -25,7 +26,7 @@ class BusinessesApi < Grape::API
       # end
       business = Business.create!(permitted_params)
       business.update_columns(code: rand(10**4))
-      respresent business, with: BusinessRepresenter
+      represent business, with: BusinessRepresenter
     end
 
     params do
@@ -51,11 +52,16 @@ class BusinessesApi < Grape::API
 
       desc 'Update business code'
       params do
-
+        requires :password, type: String, desc: 'Business password'
       end
       post '/update_code' do
         business = Business.find(params[:id])
-        business.update_columns(code: rand(10**4))
+        if business.password == params[:password]
+          business.update_columns(code: rand(10**4))
+          represent business, with: BusinessRepresenter
+        else
+          {message: 'Incorrect password, can not update code.'}
+        end
       end
     end
   end
