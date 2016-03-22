@@ -24,11 +24,13 @@ describe BusinessesApi do
 
   describe 'GET /businesses' do
     before do
-      @business = create(:business, :mexican_restaurant)
+      params = {
+        name: 'Taco King'
+      }
     end
     it 'list all of the businesses' do
       get "/businesses"
-      expect(@business).to be_kind_of(Array)
+      expect(parsed_response.data).to be_an(Array)
       expect(parsed_response.data.first['name']).to eq('Taco King')
     end
   end

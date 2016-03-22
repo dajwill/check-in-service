@@ -37,6 +37,19 @@ class UsersApi < Grape::API
         user.update_attributes!(permitted_params)
         represent user, with: UserRepresenter
       end
+
+      desc 'Get user rewards'
+      params do
+        requires :business_id, type: Integer, desc: 'Id of business'
+      end
+      get '/rewards' do
+        user = User.find(params[:id])
+        business = Business.find(params[:business_id])
+        visit_count = user.check_ins.where(business_id: params[:business_id]).count
+        rewards = Reward.where.not("visit_count > ?", visit_count)
+        represent rewards, with: RewardRepresenter
+      end
+
     end
   end
 end
