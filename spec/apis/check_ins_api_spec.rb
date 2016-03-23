@@ -49,16 +49,5 @@ describe CheckInsApi do
       post :visits, params
       expect(parsed_response.data).to_not be_nil
     end
-
-    it "it doesn't create a duplicate check in" do
-      CheckIn.create(user_id: user.id, business_id: business.id, business_code: business.code)
-      params = {
-        user_id: user.id,
-        business_id: business.id,
-        business_code: business.code
-      }
-      post :visits, params
-      expect{create :check_in}.to raise_error
-    end
   end
 end
