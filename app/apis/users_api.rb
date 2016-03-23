@@ -11,6 +11,7 @@ class UsersApi < Grape::API
 
     desc 'Create an user'
     params do
+      requires :name, type: String, desc: 'Name of new user'
     end
 
     post do
@@ -30,6 +31,7 @@ class UsersApi < Grape::API
 
       desc 'Update an user'
       params do
+        optional :name, type: String, desc: 'new name for user'
       end
       put do
         # fetch user record and update attributes.  exceptions caught in app.rb

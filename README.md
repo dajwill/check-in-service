@@ -1,6 +1,6 @@
 # check-in-service
 
-:bow: Please put your auspicious [Travis status button](http://docs.travis-ci.com/user/status-images/) here :bow:
+<!-- :bow: Please put your auspicious [Travis status button](http://docs.travis-ci.com/user/status-images/) here :bow: -->
 
 1. [Overview](#overview)
 2. [How Does It Work](#how-does-it-work)

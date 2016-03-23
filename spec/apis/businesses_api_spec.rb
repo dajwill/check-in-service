@@ -10,35 +10,42 @@ describe BusinessesApi do
   describe 'GET /businesses' do
     before do
       params = {
-        name: 'world',
-        password: 'test'
+        name: 'Taco King',
+        password: 'tacos'
       }
       post :businesses, params
     end
-    it 'returns to you all the businesses' do
+    it 'returns all of the businesses' do
       get "/businesses"
-      # do_request
-      # expect(response).to be_success
-      # expect(parsed_response.data).to be_kind_of(Array)
-      # puts parsed_response.data
-      # expect(response.body).to_not be_nil
       expect(last_response.body).to_not be_nil
       expect(JSON.parse(last_response.body)).to be_kind_of(Array)
-      expect(JSON.parse(last_response.body)[0]['name']).to eq('world')
-      # expect(parsed_response.data).to_not be_nil
-      # expect(parsed_response.data.name).to eq("Reza")
-      # expect(parsed_response.data[0].address).to eq("300 W Ontario St. Chicago, IL")
+      expect(JSON.parse(last_response.body)[0]['name']).to eq('Taco King')
     end
   end
 
-  # describe 'PUT /business' do
-  #   before do
-  #     @business = build(:business, :mexican_restaurant)
-  #     @business.update_columns(name: 'Nacho King')
-  #   end
-  #   it 'updates business' do
-  #     put '/businesses'
-  #     @business.name.should eq('Nacho King')
-  #   end
-  # end
+  describe 'POST /businesses' do
+    it 'returns the created business' do
+      params = {
+        name: 'Taco King',
+        password: 'tacos'
+      }
+      post :businesses, params
+      expect(parsed_response.data.name).to eq('Taco King')
+      # expect(JSON.parse(last_response.body)[0]['name']).to eq('Taco King')
+    end
+  end
+
+  describe 'PUT /businesses' do
+    let(:business){
+      Business.create(name: 'Taco King', password: 'tacos')
+    }
+    it 'returns the created business' do
+      params = {
+        name: 'Nacho King',
+      }
+      put "businesses/#{business.id}", params
+      expect(parsed_response.data.name).to eq('Nacho King')
+      # expect(JSON.parse(last_response.body)[0]['name']).to eq('Taco King')
+    end
+  end
 end
